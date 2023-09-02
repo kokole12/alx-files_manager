@@ -16,6 +16,22 @@ class DBClient {
         console.log(error);
       });
   }
+
+  isAlive() {
+    return this.client.isConnected();
+  }
+
+  async nbUsers() {
+    const users = this.db.collection('users');
+    const usersNumber = await users.countDocuments();
+    return usersNumber;
+  }
+
+  async nbFiles() {
+    const files = this.db.collection('files');
+    const filesNumber = await files.countDocuments();
+    return filesNumber;
+  }
 }
 
 const dbClient = new DBClient();
