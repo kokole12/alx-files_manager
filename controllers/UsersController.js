@@ -6,9 +6,11 @@ class UserController {
     const { email, password } = req.body;
     if (!email) {
       res.status(400).json({ error: 'Missing email' });
+      return;
     }
     if (!password) {
       res.status(400).send({ error: 'Missing password' });
+      return;
     }
 
     const users = dbClient.db.collection('user');
