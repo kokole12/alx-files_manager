@@ -1,5 +1,8 @@
 const sha1 = require('sha1');
+const Queue = require('bull');
 const dbClient = require('../utils/db');
+
+const userQueue = new Queue('userQueue', 'redis://127.0.0.1:6379');
 
 class UserController {
   static postNew(req, res) {
@@ -24,6 +27,7 @@ class UserController {
           password: hashedPasswd,
         }).then((result) => {
           res.status(201).json({ id: result.insertedId, email });
+          userQueue.add({ userId: result.insertedId });
         }).catch((error) => console.log(error));
       }
     });
