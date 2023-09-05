@@ -27,10 +27,7 @@ class UsersController {
 
     const newUser = await users.insertOne({ email, password: hashedPassword });
 
-    console.log(newUser._id);
-    console.log(newUser.email);
-
-    res.status(201).json({ id: newUser._id, email: newUser.email });
+    res.status(201).json({ id: newUser.insertedId, email });
   }
 }
 
